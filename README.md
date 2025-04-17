@@ -25,12 +25,12 @@ A Model Context Protocol (MCP) server that provides real-time hot trending topic
 > API Source, This project uses the `api.vvhan.com` service for fetching hot topics data.
 
 ## Available Tools
-- `get_hot_news`
+- `get_tuniao`
   - `sources` - Required arguments: Platform ID list
 - Example usage:
-  - `get_hot_news([3])` : Get Baidu Hot Discussion only
-  - `get_hot_news([1,3,7])` : Get hot lists from zhihuHot, Baidu, and huPu
-  - `get_hot_news([1,2,3,4])` : Get hot lists from zhihuHot, 36Kr, Baidu, and Bilibili`
+  - `get_tuniao([3])` : Get Baidu Hot Discussion only
+  - `get_tuniao([1,3,7])` : Get hot lists from zhihuHot, Baidu, and huPu
+  - `get_tuniao([1,2,3,4])` : Get hot lists from zhihuHot, 36Kr, Baidu, and Bilibili`
 
 ## Installation
 

@@ -15,6 +15,7 @@ export const HOT_NEWS_SOURCES: Record<number, HotNewsSource> = {
   7: { name: "huPu", description: "Hupu Hot List (虎扑热榜)" },
   8: { name: "douban", description: "Douban Hot List (豆瓣热榜)" },
   9: { name: "itNews", description: "IT News (IT新闻)" },
+  10: { name: "bili", description: "Bilibili (B站日榜)" },
 };
 
 // 新增生成描述的函数

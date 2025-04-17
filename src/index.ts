@@ -62,7 +62,7 @@ class HotNewsServer {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
         {
-          name: "get_hot_news",
+          name: "get_tuniao",
           description: "Get hot trending lists from various platforms",
           inputSchema: {
             type: "object",
@@ -84,7 +84,7 @@ class HotNewsServer {
     }));
 
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      if (request.params.name !== "get_hot_news") {
+      if (request.params.name !== "get_tuniao") {
         throw new McpError(
           ErrorCode.MethodNotFound,
           `Unknown tool: ${request.params.name}`,
