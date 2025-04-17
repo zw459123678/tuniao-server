@@ -1,3 +1,6 @@
+# 加紧开发中，基于[hotnews](https://github.com/wopal-cn/mcp-hotnews-server)初始化本项目
+
+
 # HotNews MCP Server
 
 A Model Context Protocol (MCP) server that provides real-time hot trending topics from major Chinese social platforms and news sites.
