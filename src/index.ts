@@ -108,7 +108,7 @@ class HotNewsServer {
       if (request.params.name === "get_component_doc") {
         try {
           const componentName = request.params.arguments?.name as string;
-          if (!Array.isArray(componentName) || componentName.length === 0) {
+          if (componentName.length === 0) {
             throw new Error("Please provide valid component name");
           }
           const baseUrl: string = 'https://vue2.tuniaokj.com/components/setting.html'; 
