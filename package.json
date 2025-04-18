@@ -32,6 +32,7 @@
     "prepublishOnly": "npm run build",
     "pub": "npm run build && npm publish",
     "test:urls": "node --loader ts-node/esm test/url-test.ts",
+    "test:comp": "node --loader ts-node/esm test/comp-test.ts",
     "watch": "tsc --watch",
     "docker": "docker build -t wopal/mcp-server-hotnews:latest -f Dockerfile ."
   },
