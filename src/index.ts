@@ -87,11 +87,8 @@ class HotNewsServer {
             type: "object",
             properties: {
               name: {
-                type: "array",
+                type: "string",
                 description: "The component name",
-                items: {
-                  type: "string",
-                },
               },
             },
             required: ["name"],
