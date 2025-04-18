@@ -3,6 +3,8 @@
 
 # HotNews MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@zw459123678/tuniao-server)](https://smithery.ai/server/@zw459123678/tuniao-server)
+
 A Model Context Protocol (MCP) server that provides real-time hot trending topics from major Chinese social platforms and news sites.
 
 ## Features
@@ -36,6 +38,14 @@ A Model Context Protocol (MCP) server that provides real-time hot trending topic
   - `get_tuniao([1,2,3,4])` : Get hot lists from zhihuHot, 36Kr, Baidu, and Bilibili`
 
 ## Installation
+
+### Installing via Smithery
+
+To install tuniao-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@zw459123678/tuniao-server):
+
+```bash
+npx -y @smithery/cli install @zw459123678/tuniao-server --client claude
+```
 
 ### NPX
 
