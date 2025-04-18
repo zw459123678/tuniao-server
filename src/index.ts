@@ -61,25 +61,6 @@ class HotNewsServer {
   private setupToolHandlers() {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
-        // {
-        //   name: "get_tuniao",
-        //   description: "Get hot trending lists from various platforms",
-        //   inputSchema: {
-        //     type: "object",
-        //     properties: {
-        //       sources: {
-        //         type: "array",
-        //         description: generateSourcesDescription(),
-        //         items: {
-        //           type: "number",
-        //           minimum: 1,
-        //           maximum: getMaxSourceId(),
-        //         },
-        //       },
-        //     },
-        //     required: ["sources"],
-        //   },
-        // },
         {
           name: "get_component_doc",
           description: "Get component documentation by component name",
@@ -98,7 +79,6 @@ class HotNewsServer {
     }));
 
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      // if (request.params.name !== "get_tuniao" && request.params.name !== "get_component_doc") {
       if (request.params.name !== "get_component_doc") {
         throw new McpError(
           ErrorCode.MethodNotFound,
@@ -138,76 +118,76 @@ class HotNewsServer {
         }
         
       }
-//        else {
+       else {
         
-//         try {
-//           const sources = request.params.arguments?.sources as number[];
-//           if (!Array.isArray(sources) || sources.length === 0) {
-//             throw new Error("Please provide valid source IDs");
-//           }
+        try {
+          const sources = request.params.arguments?.sources as number[];
+          if (!Array.isArray(sources) || sources.length === 0) {
+            throw new Error("Please provide valid source IDs");
+          }
 
-//           // Fetch multiple hot lists
-//           const results = await Promise.all(
-//             sources.map(async (sourceId) => {
-//               const source = HOT_NEWS_SOURCES[sourceId];
-//               if (!source) {
-//                 return `Source ID ${sourceId} does not exist`;
-//               }
+          // Fetch multiple hot lists
+          const results = await Promise.all(
+            sources.map(async (sourceId) => {
+              const source = HOT_NEWS_SOURCES[sourceId];
+              if (!source) {
+                return `Source ID ${sourceId} does not exist`;
+              }
 
-//               try {
-//                 const response = await axios.get<HotNewsResponse>(
-//                   `${BASE_API_URL}/${source.name}`,
-//                 );
-//                 const news = response.data;
+              try {
+                const response = await axios.get<HotNewsResponse>(
+                  `${BASE_API_URL}/${source.name}`,
+                );
+                const news = response.data;
 
-//                 if (!news.success) {
-//                   return `Failed to fetch ${source.description}: ${news.message}`;
-//                 }
+                if (!news.success) {
+                  return `Failed to fetch ${source.description}: ${news.message}`;
+                }
 
-//                 const newsList = news.data.map(
-//                   (item: HotNewsItem) =>
-//                     `${item.index}. [${item.title}](${item.url}) ${
-//                       item.hot ? `<small>Heat: ${item.hot}</small>` : ""
-//                     }`,
-//                 );
+                const newsList = news.data.map(
+                  (item: HotNewsItem) =>
+                    `${item.index}. [${item.title}](${item.url}) ${
+                      item.hot ? `<small>Heat: ${item.hot}</small>` : ""
+                    }`,
+                );
 
-//                 return `
-// ### ${news.name}:${news.subtitle}
-// > Last updated: ${news.update_time}
-// ${newsList.join("\n")}
-// `;
-//               } catch (error) {
-//                 return `Failed to fetch ${source.description}: ${
-//                   axios.isAxiosError(error)
-//                     ? (error.response?.data.message ?? error.message)
-//                     : "Unknown error"
-//                 }`;
-//               }
-//             }),
-//           );
+                return `
+### ${news.name}:${news.subtitle}
+> Last updated: ${news.update_time}
+${newsList.join("\n")}
+`;
+              } catch (error) {
+                return `Failed to fetch ${source.description}: ${
+                  axios.isAxiosError(error)
+                    ? (error.response?.data.message ?? error.message)
+                    : "Unknown error"
+                }`;
+              }
+            }),
+          );
 
-//           return {
-//             content: [
-//               {
-//                 type: "text",
-//                 text: results.join("\n\n"),
-//               },
-//             ],
-//           };
-//         } catch (error) {
-//           const errorMessage =
-//             error instanceof Error ? error.message : "Unknown error";
-//           return {
-//             content: [
-//               {
-//                 type: "text",
-//                 text: `Error: ${errorMessage}`,
-//               },
-//             ],
-//             isError: true,
-//           };
-//         }
-//       }
+          return {
+            content: [
+              {
+                type: "text",
+                text: results.join("\n\n"),
+              },
+            ],
+          };
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : "Unknown error";
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Error: ${errorMessage}`,
+              },
+            ],
+            isError: true,
+          };
+        }
+      }
 
     });
   }
