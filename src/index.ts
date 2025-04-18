@@ -15,7 +15,7 @@ import {
   generateSourcesDescription,
   getMaxSourceId,
 } from "./config.js";
-import { getComponentDocumentation } from "./extract-content.js";
+import { extractNavigation, getComponentDocumentation } from "./extract-content.js";
 // Define interfaces for type safety
 interface HotNewsSource {
   name: string;
@@ -62,6 +62,10 @@ class HotNewsServer {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
         {
+          name: "get_component_list",
+          description: "Get component list",
+        },
+        {
           name: "get_component_doc",
           description: "Get component documentation by component name",
           inputSchema: {
@@ -79,14 +83,25 @@ class HotNewsServer {
     }));
 
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      if (request.params.name !== "get_component_doc") {
+      if (request.params.name !== "get_component_list" && request.params.name !== "get_component_doc") {
         throw new McpError(
           ErrorCode.MethodNotFound,
           `Unknown tool: ${request.params.name}`,
         );
       }
 
-      if (request.params.name === "get_component_doc") {
+      if (request.params.name === "get_component_list") {
+        const baseUrl: string = 'https://vue2.tuniaokj.com/components/setting.html'; 
+        const navigation = await extractNavigation(baseUrl);
+        return {
+          content: [
+            {
+              type: "text",
+              text: navigation.map((item) => `${item.name} - https://vue2.tuniaokj.com${item.url}`).join("\n"),
+            },
+          ],
+        }
+      } else if (request.params.name === "get_component_doc") {
         try {
           const componentName = request.params.arguments?.name as string;
           if (componentName.length === 0) {
@@ -117,78 +132,16 @@ class HotNewsServer {
           };
         }
         
-      }
-       else {
-        
-        try {
-          const sources = request.params.arguments?.sources as number[];
-          if (!Array.isArray(sources) || sources.length === 0) {
-            throw new Error("Please provide valid source IDs");
-          }
-
-          // Fetch multiple hot lists
-          const results = await Promise.all(
-            sources.map(async (sourceId) => {
-              const source = HOT_NEWS_SOURCES[sourceId];
-              if (!source) {
-                return `Source ID ${sourceId} does not exist`;
-              }
-
-              try {
-                const response = await axios.get<HotNewsResponse>(
-                  `${BASE_API_URL}/${source.name}`,
-                );
-                const news = response.data;
-
-                if (!news.success) {
-                  return `Failed to fetch ${source.description}: ${news.message}`;
-                }
-
-                const newsList = news.data.map(
-                  (item: HotNewsItem) =>
-                    `${item.index}. [${item.title}](${item.url}) ${
-                      item.hot ? `<small>Heat: ${item.hot}</small>` : ""
-                    }`,
-                );
-
-                return `
-### ${news.name}:${news.subtitle}
-> Last updated: ${news.update_time}
-${newsList.join("\n")}
-`;
-              } catch (error) {
-                return `Failed to fetch ${source.description}: ${
-                  axios.isAxiosError(error)
-                    ? (error.response?.data.message ?? error.message)
-                    : "Unknown error"
-                }`;
-              }
-            }),
-          );
-
-          return {
-            content: [
-              {
-                type: "text",
-                text: results.join("\n\n"),
-              },
-            ],
-          };
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : "Unknown error";
-          return {
-            content: [
-              {
-                type: "text",
-                text: `Error: ${errorMessage}`,
-              },
-            ],
-            isError: true,
-          };
+      } else {
+        return {  
+          content: [
+            {
+              type: "text",
+              text: "Unknown tool",
+            },
+          ],
         }
       }
-
     });
   }
 
