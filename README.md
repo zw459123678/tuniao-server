@@ -1,5 +1,4 @@
-
-# TuNiao UI MCP Server
+# Tuniao UI MCP Server
 
 A Model Context Protocol (MCP) server that provides access to TuNiao UI components documentation and listings.
 
