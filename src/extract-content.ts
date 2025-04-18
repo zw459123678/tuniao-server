@@ -195,7 +195,22 @@ export async function getComponentDocumentation(baseUrl: string, componentName: 
     });
     
     if (!targetComponent) {
-      throw new Error(`Component "${componentName}" not found in the navigation`);
+      // 从URL中提取英文名
+      const componentsList = components.map(comp => {
+        // 从URL中提取英文名（假设URL格式包含 /components/NAME/ 或 /components/NAME.html）
+        const urlMatch = comp.url.match(/\/components\/([^\/\.]+)/i);
+        const englishName = urlMatch ? urlMatch[1] : 'unknown';
+        return { 
+          chinese: comp.name,
+          english: englishName
+        };
+      });
+      
+      const availableComponentsStr = componentsList
+        .map(comp => `${comp.english}: ${comp.chinese}`)
+        .join('\n- ');
+      
+      throw new Error(`Component "${componentName}" not found in the navigation. Available components:\n- ${availableComponentsStr}`);
     }
     
     console.log(`Found matching component: ${targetComponent.name} at ${targetComponent.url}`);
