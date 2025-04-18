@@ -1,4 +1,4 @@
-import { getComponentDocumentation } from '../src/extract-content.js';
+import { getComponentDocumentation } from './extract-content';
 
 async function main(): Promise<void> {
   try {
