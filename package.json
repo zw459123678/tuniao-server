@@ -23,7 +23,9 @@
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "node-fetch": "^3.3.2"
   },
   "scripts": {
     "build": "tsc && shx chmod +x build/*.js",
@@ -34,10 +36,10 @@
     "docker": "docker build -t wopal/mcp-server-hotnews:latest -f Dockerfile ."
   },
   "devDependencies": {
+    "@types/node": "^20.11.0",
     "shx": "^0.3.4",
-    "typescript": "^5.7.2",
     "ts-node": "^10.9.2",
-    "@types/node": "^20.11.0"
+    "typescript": "^5.7.2"
   },
   "type": "module"
 }
