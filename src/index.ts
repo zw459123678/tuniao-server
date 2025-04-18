@@ -64,6 +64,11 @@ class HotNewsServer {
         {
           name: "get_component_list",
           description: "Get component list",
+          inputSchema: {
+            type: "object",
+            properties: {},
+          },
+          required: [],
         },
         {
           name: "get_component_doc",
