@@ -1,39 +1,23 @@
-# 加紧开发中，基于[hotnews](https://github.com/wopal-cn/mcp-hotnews-server)初始化本项目
 
+# TuNiao UI MCP Server
 
-# HotNews MCP Server
-
-A Model Context Protocol (MCP) server that provides real-time hot trending topics from major Chinese social platforms and news sites.
+A Model Context Protocol (MCP) server that provides access to TuNiao UI components documentation and listings.
 
 ## Features
 
-- Real-time hot topics from 9 major Chinese platforms
+- Component information from [Tuniao UI](https://vue2.tuniaokj.com/)
 - MCP protocol compatible
 - Easy integration with AI models
 - Markdown formatted output with clickable links
-- Heat index support (where available)
-
-## Supported Platforms
-
-1. Zhihu Hot List (知乎热榜)
-2. 36Kr Hot List (36氪热榜)
-3. Baidu Hot Discussion (百度热点)
-4. Bilibili Hot List (B站热榜)
-5. Weibo Hot Search (微博热搜)
-6. Douyin Hot List (抖音热点)
-7. Hupu Hot List (虎扑热榜)
-8. Douban Hot List (豆瓣热榜)
-9. IT News (IT新闻)
-
-> API Source, This project uses the `api.vvhan.com` service for fetching hot topics data.
+- Comprehensive component documentation
 
 ## Available Tools
-- `get_tuniao`
-  - `sources` - Required arguments: Platform ID list
-- Example usage:
-  - `get_tuniao([3])` : Get Baidu Hot Discussion only
-  - `get_tuniao([1,3,7])` : Get hot lists from zhihuHot, Baidu, and huPu
-  - `get_tuniao([1,2,3,4])` : Get hot lists from zhihuHot, 36Kr, Baidu, and Bilibili`
+
+- `get_component_list`
+  - Gets a list of available TuNiao UI components
+  
+- `get_component_doc`
+  - Gets detailed documentation for a specific TuNiao UI component
 
 ## Installation
 
@@ -42,11 +26,11 @@ A Model Context Protocol (MCP) server that provides real-time hot trending topic
 ```json
 {
   "mcpServers": {
-    "mcp-server-hotnews": {
+    "mcp-server-tuniao": {
       "command": "npx",
       "args": [
         "-y",
-        "@wopal/mcp-server-hotnews"
+        "@zw459123678/tuniao-server"
       ]
     }
   }
@@ -59,13 +43,13 @@ A Model Context Protocol (MCP) server that provides real-time hot trending topic
 ```json
 {
   "mcpServers": {
-    "mcp-server-hotnews": {
+    "mcp-server-tuniao": {
       "command": "docker",
       "args": [
         "run",
         "-i",
         "--rm",
-        "wopal/mcp-server-hotnews"
+        "zw459123678/tuniao-server"
       ]
     }
   }
@@ -84,14 +68,14 @@ npm run watch
 # Build
 npm run build
 
-# Test URLs
-npm run test:urls
+# Test components
+npm run test:comp
 ```
 
 Docker build:
 
 ```bash
-docker build -t wopal/mcp-server-hotnews:latest -f Dockerfile .
+docker build -t zw459123678/tuniao-server:latest -f Dockerfile .
 ```
 
 ## License

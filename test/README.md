@@ -1,16 +1,13 @@
-# URL 可用性测试
+# 可用性测试
 
-本测试程序用于验证热榜网站 URL 的可用性。
+本测试程序用于验证图鸟网站的可用性。
 
 ## 运行测试
 
 ```bash
-npm run test:urls
+npm run test:comp
 ```
 
-## 测试结果
-测试结果将保存在 `test/results/test-results.json` 文件中。
-```
 
 5. 使用方法：
 ```bash
@@ -18,5 +15,5 @@ npm run test:urls
 npm install --save-dev axios ts-node
 
 # 运行测试
-npm run test:urls
+npm run test:comp
 ```
